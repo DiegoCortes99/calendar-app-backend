@@ -1,17 +1,34 @@
-import express, { Request, Response } from 'express'
-require('dotenv').config();
+import express from 'express';
+import dotenv from 'dotenv';
+import { authRouter } from './routes/auth';
+import { dbConnection } from './database/config';
+import cors from 'cors';
 
-console.log(process.env);
+dotenv.config();
+// console.log(process.env);
 
-const app = express()
+// Crea el servidor de express
+const app = express();
 
-// app.get('/', (req: Request, res: Response) => {
-//     res.send('Hello World!')
-//     res.send('<h1>Hola mundo</h1>')
-// })
+// Base de datos
+dbConnection();
 
-app.use(express.static('public'))
+// CORS
+app.use(cors())
 
-app.listen(process.env.PORT, () => {
-    console.log(`Corriendo en el puerto ${process.env.PORT}`)
-})
+// Directorio Publico
+app.use(express.static('public'));
+
+// Lectura y parseo del body
+app.use( express.json() );
+
+// Rutas
+app.use('/api/auth', authRouter);
+
+// Escuchar peticiones
+
+const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+
+app.listen(PORT, () => {
+    console.log(`Corriendo en el puerto ${PORT}`);
+});
