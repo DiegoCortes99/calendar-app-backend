@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { authRouter } from './routes/auth';
 import { dbConnection } from './database/config';
 import cors from 'cors';
+import { eventsRouter } from './routes/events';
 
 dotenv.config();
 // console.log(process.env);
@@ -24,6 +25,8 @@ app.use( express.json() );
 
 // Rutas
 app.use('/api/auth', authRouter);
+app.use('/api/events', eventsRouter);
+
 
 // Escuchar peticiones
 
