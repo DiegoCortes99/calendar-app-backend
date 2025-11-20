@@ -7,7 +7,7 @@ export const getEventos = async(req:Request, res:Response) =>{
 
     const evento = await Evento.find().populate('user','name')
 
-    res.status(201).json({
+    res.status(200).json({
         ok:true,
         evento: evento
     })
@@ -30,7 +30,7 @@ export const crearEvento = async(req:Request, res:Response) =>{
         })
         
     } catch (error) {
-        res.status(500).json({
+        res.status(200).json({
             ok:false,
             msg:'Comunicarse con el administrador'
         })
@@ -67,7 +67,7 @@ export const actualizarEvento = async(req:Request, res:Response) =>{
 
         const eventoActualizado = await Evento.findByIdAndUpdate( eventoId, nuevoEvento,{new:true});
 
-        res.json({
+        res.status(200).json({
             ok:true,
             evento:eventoActualizado
         });
@@ -105,7 +105,7 @@ export const eliminarEvento = async(req:Request, res:Response) =>{
 
         const eventoEliminado = await Evento.findByIdAndDelete(eventoId,{new:true})
 
-        res.json({
+        res.status(200).json({
             ok:true,
             evento:eventoEliminado
         });
